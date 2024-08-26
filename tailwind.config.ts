@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      translate: {
+        "-1/2": "-50%",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

@@ -120,7 +120,7 @@ const MapComponent: React.FC = () => {
   }, [selectedBuilding, highlightColor]);
 
   return (
-    <div className="w-full h-screen relative">
+    <div className="w-full h-[90vh] relative">
       <Map
         initialViewState={{
           latitude: 37.7749,
