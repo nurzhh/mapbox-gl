@@ -202,7 +202,7 @@ const MapComponent: React.FC = () => {
       )}
 
       {/* Нижнее меню действий */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 bg-white shadow-lg flex justify-around items-center">
+      <div className="absolute bottom-4 left-4 z-10 right-0 p-4 shadow-lg flex justify-around items-center">
         <Button
           onClick={increaseHeight}
           className="flex flex-col items-center text-gray-700"
