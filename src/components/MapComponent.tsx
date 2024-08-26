@@ -214,7 +214,7 @@ const MapComponent: React.FC = () => {
           </p>
         </div>
       )}
-
+{/*  */}
       {/* Нижнее меню действий */}
       <div className="fixed bottom-0 left-0 w-full  shadow-lg flex justify-around items-center p-4 z-10">
         <Button
