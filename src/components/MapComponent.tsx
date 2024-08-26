@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import Map, { Layer, Source } from "react-map-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import "mapbox-gl/dist/mapbox-gl.css";
 import { Button } from "./ui/button";
 import { FaUserCircle } from "react-icons/fa";
 import mapboxgl from "mapbox-gl";
@@ -216,7 +216,7 @@ const MapComponent: React.FC = () => {
       )}
 
       {/* Нижнее меню действий */}
-      <div className="absolute bottom-4 left-4 z-10 right-0 p-4 shadow-lg flex justify-around items-center">
+      <div className="fixed bottom-0 left-0 w-full  shadow-lg flex justify-around items-center p-4 z-10">
         <Button
           onClick={increaseHeight}
           className="flex flex-col items-center text-gray-700"

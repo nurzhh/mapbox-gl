@@ -17,6 +17,9 @@ const config = {
         "2xl": "1400px",
       },
     },
+    screens: {
+      mmd: { max: "768px" },
+    },
     extend: {
       translate: {
         "-1/2": "-50%",
