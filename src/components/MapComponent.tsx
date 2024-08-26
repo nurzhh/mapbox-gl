@@ -53,7 +53,6 @@ const MapComponent: React.FC = () => {
           setExtrusionHeight(buildingInfo.height || 0);
 
           if (mapRef.current) {
-            // Reset previous building color if it exists
             if (previousBuildingId) {
               mapRef.current.setFeatureState(
                 {
@@ -64,8 +63,6 @@ const MapComponent: React.FC = () => {
                 { color: "#aaa" }
               );
             }
-
-            // Highlight the new building
             mapRef.current.setFeatureState(
               {
                 source: "3d-buildings-source",
@@ -76,7 +73,7 @@ const MapComponent: React.FC = () => {
             );
           }
 
-          setPreviousBuildingId(featureId.toString()); // Update the previous building ID
+          setPreviousBuildingId(featureId.toString());
         } else {
           console.error("Feature ID is undefined or null");
         }
@@ -97,7 +94,6 @@ const MapComponent: React.FC = () => {
 
   useEffect(() => {
     if (mapRef.current && selectedBuilding) {
-      // Apply feature state for the selected building
       mapRef.current.setFeatureState(
         {
           source: "3d-buildings-source",
@@ -167,7 +163,7 @@ const MapComponent: React.FC = () => {
         </Source>
       </Map>
 
-      {/* User icon with menu */}
+      {/* Значок пользователя с меню */}
       <div className="absolute top-4 right-4">
         <Popover>
           <PopoverTrigger>
@@ -189,7 +185,7 @@ const MapComponent: React.FC = () => {
         </Popover>
       </div>
 
-      {/* Information window for selected building */}
+      {/* Информационное окно выбранного здания */}
       {selectedBuilding && (
         <div className="absolute top-4 left-4 p-4 bg-white rounded shadow-lg z-10">
           <h2 className="text-xl font-bold">{selectedBuilding.name}</h2>
@@ -205,7 +201,7 @@ const MapComponent: React.FC = () => {
         </div>
       )}
 
-      {/* Bottom action menu */}
+      {/* Нижнее меню действий */}
       <div className="absolute bottom-0 left-0 right-0 p-4 bg-white shadow-lg flex justify-around items-center">
         <Button
           onClick={increaseHeight}
