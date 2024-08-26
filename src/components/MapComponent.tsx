@@ -7,9 +7,11 @@ import { Button } from "./ui/button";
 import { FaUserCircle } from "react-icons/fa";
 import mapboxgl from "mapbox-gl";
 
+// Токен Mapbox для доступа к сервисам Mapbox
 const MAPBOX_TOKEN =
   "pk.eyJ1Ijoic2luZ3VsYXJpdHlsYWIiLCJhIjoiY2x6b2JmZGNhMHY0eTJrcXcxOGp0eDluNiJ9.tOMt_XF278-jrGovF9MsAw";
 
+// Интерфейс для информации о здании
 interface BuildingInfo {
   id: string;
   name?: string;
@@ -20,16 +22,22 @@ interface BuildingInfo {
 }
 
 const MapComponent: React.FC = () => {
+  // Состояние для выбранного здания
   const [selectedBuilding, setSelectedBuilding] = useState<BuildingInfo | null>(
     null
   );
+  // Состояние для ID предыдущего здания для сброса цвета
   const [previousBuildingId, setPreviousBuildingId] = useState<string | null>(
     null
   );
+  // Состояние для высоты экструзии
   const [extrusionHeight, setExtrusionHeight] = useState<number>(0);
+  // Состояние для цвета подсветки здания
   const [highlightColor, setHighlightColor] = useState<string>("#00ff00");
+  // Ссылка на карту
   const mapRef = useRef<mapboxgl.Map | null>(null);
 
+  // Обработчик клика по зданию
   const handleBuildingClick = useCallback(
     (event: any) => {
       const features = event.features;
@@ -48,11 +56,12 @@ const MapComponent: React.FC = () => {
             iso3166_2: firstFeature.properties.iso_3166_2 || "Неизвестен",
           };
 
-          console.log(buildingInfo);
+          // Обновление состояния выбранного здания
           setSelectedBuilding(buildingInfo);
           setExtrusionHeight(buildingInfo.height || 0);
 
           if (mapRef.current) {
+            // Сброс цвета предыдущего здания
             if (previousBuildingId) {
               mapRef.current.setFeatureState(
                 {
@@ -63,6 +72,7 @@ const MapComponent: React.FC = () => {
                 { color: "#aaa" }
               );
             }
+            // Установка цвета для нового выбранного здания
             mapRef.current.setFeatureState(
               {
                 source: "3d-buildings-source",
@@ -73,25 +83,29 @@ const MapComponent: React.FC = () => {
             );
           }
 
+          // Обновление ID предыдущего здания
           setPreviousBuildingId(featureId.toString());
         } else {
-          console.error("Feature ID is undefined or null");
+          console.error("ID объекта не определен или равен null");
         }
       }
     },
     [highlightColor, previousBuildingId]
   );
 
+  // Функция для увеличения высоты экструзии
   const increaseHeight = () => {
     if (selectedBuilding) {
       setExtrusionHeight((prevHeight) => prevHeight + 50);
     }
   };
 
+  // Функция для изменения цвета здания
   const changeBuildingColor = () => {
     setHighlightColor(highlightColor === "#00ff00" ? "#ff0000" : "#00ff00");
   };
 
+  // Обновление состояния цвета для выбранного здания при изменении
   useEffect(() => {
     if (mapRef.current && selectedBuilding) {
       mapRef.current.setFeatureState(
@@ -173,12 +187,12 @@ const MapComponent: React.FC = () => {
             <div className="p-4 bg-white rounded-lg shadow-lg">
               <ul>
                 <li className="p-2 hover:bg-gray-200 cursor-pointer">
-                  Profile
+                  Профиль
                 </li>
                 <li className="p-2 hover:bg-gray-200 cursor-pointer">
-                  Settings
+                  Настройки
                 </li>
-                <li className="p-2 hover:bg-gray-200 cursor-pointer">Logout</li>
+                <li className="p-2 hover:bg-gray-200 cursor-pointer">Выход</li>
               </ul>
             </div>
           </PopoverContent>
@@ -196,25 +210,25 @@ const MapComponent: React.FC = () => {
             <strong>Region:</strong> {selectedBuilding.iso3166_2}
           </p>
           <p>
-            <strong>Height:</strong> {extrusionHeight} m
+            <strong>Height:</strong> {extrusionHeight} м
           </p>
         </div>
       )}
 
       {/* Нижнее меню действий */}
-      <div className="absolute bottom-4 left-4 z-10 right-0 p-4 shadow-lg flex justify-around items-center">
+      <div className="absolute bottom-0 left-0 right-0 p-4 bg-white shadow-lg flex justify-around items-center">
         <Button
           onClick={increaseHeight}
           className="flex flex-col items-center text-gray-700"
         >
-          <span className="text-white">Increase Height</span>
+          <span className="text-white">Увеличить высоту</span>
         </Button>
 
         <Button
           onClick={changeBuildingColor}
           className="flex flex-col items-center text-gray-700"
         >
-          <span className="text-white">Change Color</span>
+          <span className="text-white">Изменить цвет</span>
         </Button>
       </div>
     </div>
